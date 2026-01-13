@@ -14,6 +14,28 @@ class _LoginPageState extends State<LoginPage> {
   final usernameController = TextEditingController();
   final passwordController = TextEditingController();
 
+  bool get _isFormValid {
+    return emailController.text.isNotEmpty &&
+        usernameController.text.isNotEmpty &&
+        passwordController.text.isNotEmpty;
+  }
+
+  void _onFormChanged() {
+    setState(() {});
+  }
+
+
+  @override
+  void initState() {
+    super.initState();
+
+
+    emailController.addListener(_onFormChanged);
+    usernameController.addListener(_onFormChanged);
+    passwordController.addListener(_onFormChanged);
+
+  }
+
   Future<void> _login() async {
     if (emailController.text.isEmpty ||
         usernameController.text.isEmpty ||
@@ -106,9 +128,12 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(
                   height: 48,
                   child: ElevatedButton(
-                    onPressed: _login,
+                    onPressed: _isFormValid ? _login : null,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.blueAccent,
+                      backgroundColor: _isFormValid
+                          ? Colors.blueAccent
+                          : Colors.grey.shade400,
+                      disabledBackgroundColor: Colors.grey.shade400,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
