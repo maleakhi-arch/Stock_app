@@ -328,7 +328,7 @@ class DBHelper {
 
       // 🔔 NOTIFIKASI STOK MENIPIS
       if (newStock <= item.minStock) {
-        await NotificationService().showLowStock(
+        await NotificationService().showLowStockNotification(
           id: item.id!,
           itemName: item.name,
           stock: newStock,

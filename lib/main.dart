@@ -7,9 +7,11 @@ import 'main.menu.dart';
 import '../kasir/providers/cart_providers.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  await NotificationService().init(); 
+  try {await NotificationService().init(); 
+  } catch (e) {
+    debugPrint('Error initializing notification service: $e');
+  }
+  
 
   runApp(
     MultiProvider(
@@ -33,6 +35,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        brightness: Brightness.light,
+        scaffoldBackgroundColor: const Color(0xFFF5F5F5),
+        useMaterial3: true,
+      ),
+      themeMode: ThemeMode.light,
       home: FutureBuilder<bool>(
         future: _isLoggedIn(),
         builder: (context, snapshot) {

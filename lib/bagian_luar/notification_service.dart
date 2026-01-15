@@ -8,36 +8,40 @@ class NotificationService {
 
   NotificationService._internal();
 
-  final FlutterLocalNotificationsPlugin _plugin =
+  final FlutterLocalNotificationsPlugin _notifications =
       FlutterLocalNotificationsPlugin();
 
   Future<void> init() async {
-    const androidSettings =
-        AndroidInitializationSettings('@mipmap/ic_launcher');
+    const AndroidInitializationSettings androidSettings =
+        AndroidInitializationSettings('ic_notification'); 
 
-    const settings = InitializationSettings(android: androidSettings);
+    const InitializationSettings settings =
+        InitializationSettings(android: androidSettings);
 
-    await _plugin.initialize(settings);
+    await _notifications.initialize(settings);
   }
 
-  Future<void> showLowStock({
+  Future<void> showLowStockNotification({
     required int id,
     required String itemName,
     required int stock,
   }) async {
-    const androidDetails = AndroidNotificationDetails(
+    const AndroidNotificationDetails androidDetails =
+        AndroidNotificationDetails(
       'low_stock_channel',
       'Stok Menipis',
       channelDescription: 'Notifikasi saat stok barang menipis',
       importance: Importance.max,
       priority: Priority.high,
+      icon: 'ic_notification', // drawable
     );
 
-    const details = NotificationDetails(android: androidDetails);
+    const NotificationDetails details =
+        NotificationDetails(android: androidDetails);
 
-    await _plugin.show(
+    await _notifications.show(
       id,
-      'Stok Menipis ⚠️',
+      '⚠️ Stok Menipis',
       '$itemName tersisa $stock',
       details,
     );
