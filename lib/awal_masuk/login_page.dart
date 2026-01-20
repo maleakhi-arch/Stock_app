@@ -36,7 +36,7 @@ class _LoginPageState extends State<LoginPage> {
 
   }
 
-  Future<void> _login() async {
+  Future<void> login() async {
     if (emailController.text.isEmpty ||
         usernameController.text.isEmpty ||
         passwordController.text.isEmpty) {
@@ -102,14 +102,14 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 24),
 
-                _buildField(
+                buildField(
                   controller: usernameController,
                   label: 'Nama Toko',
                   icon: Icons.store,
                 ),
                 const SizedBox(height: 14),
 
-                _buildField(
+                buildField(
                   controller: emailController,
                   label: 'Email Toko',
                   icon: Icons.email,
@@ -117,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 const SizedBox(height: 14),
 
-                _buildField(
+                buildField(
                   controller: passwordController,
                   label: 'Password',
                   icon: Icons.lock,
@@ -128,7 +128,7 @@ class _LoginPageState extends State<LoginPage> {
                 SizedBox(
                   height: 48,
                   child: ElevatedButton(
-                    onPressed: _isFormValid ? _login : null,
+                    onPressed: _isFormValid ? login : null,
                     style: ElevatedButton.styleFrom(
                       backgroundColor: _isFormValid
                           ? Colors.blueAccent
@@ -155,7 +155,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _buildField({
+  Widget buildField({
     required TextEditingController controller,
     required String label,
     required IconData icon,

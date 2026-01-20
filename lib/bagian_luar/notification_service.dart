@@ -33,7 +33,7 @@ class NotificationService {
       channelDescription: 'Notifikasi saat stok barang menipis',
       importance: Importance.max,
       priority: Priority.high,
-      icon: 'ic_notification', // drawable
+      icon: 'ic_notification', 
     );
 
     const NotificationDetails details =

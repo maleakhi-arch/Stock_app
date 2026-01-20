@@ -36,10 +36,10 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _loadItems();
+    loadItems();
   }
 
-  Future<void> _loadItems() async {
+  Future<void> loadItems() async {
     final result = await db.getItemsByCategory(
       category: selectedCategory,
       query: searchQuery.isEmpty ? null : searchQuery,
@@ -56,7 +56,7 @@ class _HomePageState extends State<HomePage> {
       context,
       MaterialPageRoute(builder: (_) => const AddEditItemPage()),
     );
-    if (result == true) _loadItems();
+    if (result == true) loadItems();
   }
 
   Future<void> _openEdit(Item item) async {
@@ -64,7 +64,7 @@ class _HomePageState extends State<HomePage> {
       context,
       MaterialPageRoute(builder: (_) => AddEditItemPage(item: item)),
     );
-    if (result == true) _loadItems();
+    if (result == true) loadItems();
   }
 
   void _openHistory(Item item) {
@@ -102,7 +102,7 @@ class _HomePageState extends State<HomePage> {
 
     if (confirm == true) {
       await db.deleteItem(item.id!);
-      _loadItems();
+      loadItems();
     }
   }
 
@@ -135,7 +135,7 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
             icon: const Icon(Icons.refresh, color: Colors.black),
-            onPressed: _loadItems,
+            onPressed: loadItems,
           ),
           IconButton(
             icon: Icon(
@@ -152,7 +152,7 @@ class _HomePageState extends State<HomePage> {
                   searchQuery = '';
                 }
               });
-              _loadItems();
+              loadItems();
             },
           ),
           IconButton(
@@ -170,7 +170,7 @@ class _HomePageState extends State<HomePage> {
                   controller: _searchController,
                   onChanged: (value) {
                     searchQuery = value;
-                    _loadItems();
+                    loadItems();
                   },
                   decoration: InputDecoration(
                     hintText: 'Cari nama atau kode barang...',
@@ -181,7 +181,7 @@ class _HomePageState extends State<HomePage> {
                             onPressed: () {
                               _searchController.clear();
                               searchQuery = '';
-                              _loadItems();
+                              loadItems();
                             },
                           )
                         : null,
@@ -213,7 +213,7 @@ class _HomePageState extends State<HomePage> {
                           setState(() {
                             selectedCategory = cat;
                           });
-                          _loadItems();
+                          loadItems();
                         },
                         selectedColor: Colors.blueAccent,
                         backgroundColor: Colors.grey.shade200,
@@ -256,7 +256,7 @@ class _HomePageState extends State<HomePage> {
                       change: change,
                       note: note,
                     );
-                    _loadItems();
+                    loadItems();
                   },
                   onInfo: () => _openInfo(item),
                 );

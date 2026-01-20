@@ -299,7 +299,6 @@ class DBHelper {
 
       final newStock = item.stock - c.quantity;
 
-      // update stock
       await txn.update(
         'items',
         {'stock': newStock},
@@ -307,7 +306,6 @@ class DBHelper {
         whereArgs: [item.id],
       );
 
-      // sale_items
       await txn.insert('sale_items', {
         'saleId': saleId,
         'itemId': item.id,
@@ -316,7 +314,6 @@ class DBHelper {
         'buyPrice': item.buyPrice,
       });
 
-      // stock history
       await txn.insert('stock_history', {
         'itemId': item.id,
         'saleId': saleId,
@@ -326,7 +323,6 @@ class DBHelper {
         'timestamp': DateTime.now().toIso8601String(),
       });
 
-      // 🔔 NOTIFIKASI STOK MENIPIS
       if (newStock <= item.minStock) {
         await NotificationService().showLowStockNotification(
           id: item.id!,

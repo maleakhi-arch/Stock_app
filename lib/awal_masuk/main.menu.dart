@@ -1,7 +1,7 @@
   import 'package:flutter/material.dart';
   import 'package:shared_preferences/shared_preferences.dart';
-  import '../stock/pages_stock/home_page.dart';
-  import '../kasir/pages_kasir/cashier_page.dart';
+  import '../../stock/pages_stock/home_page.dart';
+  import '../../kasir/pages_kasir/cashier_page.dart';
 
   class MainMenuPage extends StatefulWidget {
     const MainMenuPage({super.key});
@@ -16,10 +16,10 @@
     @override
     void initState() {
       super.initState();
-      _loadStore();
+      loadStore();
     }
 
-    Future<void> _loadStore() async {
+    Future<void> loadStore() async {
       final prefs = await SharedPreferences.getInstance();
       setState(() {
         storeName = prefs.getString('storeName') ?? '';
@@ -41,7 +41,7 @@
           child: Column(
             children: [
               Expanded(
-                child: _menuButton(
+                child: menuButton(
                   title: 'Stock Manager',
                   icon: Icons.inventory,
                   onTap: () {
@@ -54,7 +54,7 @@
               ),
               const SizedBox(height: 16),
               Expanded(
-                child: _menuButton(
+                child: menuButton(
                   title: 'Kasir',
                   icon: Icons.point_of_sale,
                   onTap: () {
@@ -73,7 +73,7 @@
       );
     }
 
-    Widget _menuButton({
+    Widget menuButton({
       required String title,
       required IconData icon,
       required VoidCallback onTap,

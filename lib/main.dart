@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'bagian_luar/notification_service.dart';
-import 'login_page.dart';
-import 'main.menu.dart';
+import 'awal_masuk/login_page.dart';
+import 'awal_masuk/main.menu.dart';
 import '../kasir/providers/cart_providers.dart';
 
 void main() async {
