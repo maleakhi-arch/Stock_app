@@ -7,6 +7,7 @@ import 'awal_masuk/main.menu.dart';
 import '../kasir/providers/cart_providers.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   try {await NotificationService().init(); 
   } catch (e) {
     debugPrint('Error initializing notification service: $e');
