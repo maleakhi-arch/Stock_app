@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "949884722780",
+    "project_id": "flutterstockapp-b8215",
+    "storage_bucket": "flutterstockapp-b8215.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:949884722780:android:c5cdfb7f644af138201099",
+        "android_client_info": {
+          "package_name": "com.example.stock_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "949884722780-5v0tdik1ndsm3ram1ndman7c5auj91o5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHWi7KBuIhB7y-u3GAfc9Q0AgNWs2v1EY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "949884722780-5v0tdik1ndsm3ram1ndman7c5auj91o5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "949884722780-um0e9r6ppeffgbsr7d2to26sgbb7c8v6.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.stockApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -189,8 +189,8 @@ class _ItemCardState extends State<ItemCard> with SingleTickerProviderStateMixin
                       icon: const Icon(Icons.more_vert),
                       onSelected: (value) {
                         if (value == 'edit') widget.onEdit();
-                        if (value == 'delete') widget.onDelete();
                         if (value == 'history') widget.onHistory();
+                        if (value == 'delete') widget.onDelete();
                         if (value == 'info') widget.onInfo();
                       },
                       itemBuilder: (context) => [

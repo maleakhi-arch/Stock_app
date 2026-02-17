@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stock_app/firebase_options.dart';
 import 'bagian_luar/notification_service.dart';
 import 'awal_masuk/login_page.dart';
 import 'awal_masuk/main.menu.dart';
 import '../kasir/providers/cart_providers.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   try {await NotificationService().init(); 
   } catch (e) {
     debugPrint('Error initializing notification service: $e');
