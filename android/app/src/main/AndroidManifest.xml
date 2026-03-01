@@ -10,11 +10,6 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <!-- WAJIB untuk Google Sign In -->
-        <meta-data
-            android:name="com.google.gms.client_id"
-            android:value="CLIENT_ID_KAMU.apps.googleusercontent.com" />
-
         <activity
             android:name=".MainActivity"
             android:exported="true"

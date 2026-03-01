@@ -15,12 +15,12 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  try {await NotificationService().init(); 
+    try {await NotificationService().init(); 
   } catch (e) {
     debugPrint('Error initializing notification service: $e');
   }
-  
 
+  
   runApp(
     MultiProvider(
       providers: [

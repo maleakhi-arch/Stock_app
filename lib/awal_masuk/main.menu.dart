@@ -1,7 +1,9 @@
   import 'package:flutter/material.dart';
   import 'package:shared_preferences/shared_preferences.dart';
+  import 'package:stock_app/profile/profil_page.dart';
   import '../../stock/pages_stock/home_page.dart';
   import '../../kasir/pages_kasir/cashier_page.dart';
+
 
   class MainMenuPage extends StatefulWidget {
     const MainMenuPage({super.key});
@@ -35,6 +37,15 @@
             storeName.isEmpty ? 'Menu Utama' : storeName,
             style: const TextStyle(fontWeight: FontWeight.bold),
           ),
+          actions: [
+            IconButton( icon: const Icon(Icons.person),
+             onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (_) => ProfilePage()),
+              ). then((_){
+                loadStore();
+              });
+             })
+          ],
         ),
         body: Padding(
           padding: const EdgeInsets.all(20),

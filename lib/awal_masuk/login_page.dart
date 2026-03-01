@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'auth_service.dart';
 import 'main.menu.dart';
 
 class LoginPage extends StatefulWidget {
@@ -10,170 +10,90 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final emailController = TextEditingController();
-  final usernameController = TextEditingController();
-  final passwordController = TextEditingController();
+  bool isLoading = false;
 
-  bool get _isFormValid {
-    return emailController.text.isNotEmpty &&
-        usernameController.text.isNotEmpty &&
-        passwordController.text.isNotEmpty;
-  }
+  Future<void> handleGoogleLogin() async {
+    setState(() => isLoading = true);
 
-  void _onFormChanged() {
-    setState(() {});
-  }
+    try {
+      final user = await AuthService().signInWithGoogle();
 
-
-  @override
-  void initState() {
-    super.initState();
-
-
-    emailController.addListener(_onFormChanged);
-    usernameController.addListener(_onFormChanged);
-    passwordController.addListener(_onFormChanged);
-
-  }
-
-  Future<void> login() async {
-    if (emailController.text.isEmpty ||
-        usernameController.text.isEmpty ||
-        passwordController.text.isEmpty) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Semua field wajib diisi')));
-      return;
+      if (user != null) {
+        // pindah ke menu utama
+        Navigator.pushReplacement(
+          // ignore: use_build_context_synchronously
+          context,
+          MaterialPageRoute(builder: (_) => const MainMenuPage()),
+        );
+      }
+    } catch (e) {
+      // ignore: use_build_context_synchronously
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Login gagal: $e")),
+      );
     }
 
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('storeEmail', emailController.text);
-    await prefs.setString('storeName', usernameController.text);
-    await prefs.setString('storePassword', passwordController.text);
-
-    if (!mounted) return;
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (_) => const MainMenuPage()),
-    );
+    setState(() => isLoading = false);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF4F6F8),
+      backgroundColor: const Color(0xFFF5F5F5),
       body: Center(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Container(
-            constraints: const BoxConstraints(maxWidth: 420),
-            padding: const EdgeInsets.all(24),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  // ignore: deprecated_member_use
-                  color: Colors.black.withOpacity(0.05),
-                  blurRadius: 15,
-                  offset: const Offset(0, 8),
-                ),
-              ],
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                const Icon(
-                  Icons.storefront,
-                  size: 56,
-                  color: Colors.blueAccent,
-                ),
-                const SizedBox(height: 12),
-                const Text(
-                  'Login UMKM',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-                ),
-                const SizedBox(height: 6),
-                const Text(
-                  'Kelola toko kamu dengan mudah',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(color: Colors.grey),
-                ),
-                const SizedBox(height: 24),
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
 
-                buildField(
-                  controller: usernameController,
-                  label: 'Nama Toko',
-                  icon: Icons.store,
-                ),
-                const SizedBox(height: 14),
+              /// 🔥 Logo / Judul
+              const Icon(Icons.store, size: 90, color: Colors.blue),
 
-                buildField(
-                  controller: emailController,
-                  label: 'Email Toko',
-                  icon: Icons.email,
-                  keyboardType: TextInputType.emailAddress,
-                ),
-                const SizedBox(height: 14),
+              const SizedBox(height: 20),
 
-                buildField(
-                  controller: passwordController,
-                  label: 'Password',
-                  icon: Icons.lock,
-                  obscureText: true,
+              const Text(
+                "Stock App",
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
                 ),
-                const SizedBox(height: 24),
+              ),
 
-                SizedBox(
-                  height: 48,
-                  child: ElevatedButton(
-                    onPressed: _isFormValid ? login : null,
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: _isFormValid
-                          ? Colors.blueAccent
-                          : Colors.grey.shade400,
-                      disabledBackgroundColor: Colors.grey.shade400,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                    ),
-                    child: const Text(
-                      'Masuk',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                      ),
+              const SizedBox(height: 8),
+
+              const Text(
+                "Login untuk melanjutkan",
+                style: TextStyle(color: Colors.grey),
+              ),
+
+              const SizedBox(height: 40),
+
+              /// 🔵 Tombol Google Login
+              SizedBox(
+                width: double.infinity,
+                height: 55,
+                child: ElevatedButton.icon(
+                  onPressed: isLoading ? null : handleGoogleLogin,
+                  icon: const Icon(Icons.login),
+                  label: isLoading
+                      ? const CircularProgressIndicator(color: Colors.white)
+                      : const Text(
+                          "Login dengan Google",
+                          style: TextStyle(fontSize: 16),
+                        ),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
                     ),
                   ),
                 ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+              ),
 
-  Widget buildField({
-    required TextEditingController controller,
-    required String label,
-    required IconData icon,
-    bool obscureText = false,
-    TextInputType? keyboardType,
-  }) {
-    return TextField(
-      controller: controller,
-      obscureText: obscureText,
-      keyboardType: keyboardType,
-      decoration: InputDecoration(
-        prefixIcon: Icon(icon, color: Colors.blueAccent),
-        labelText: label,
-        filled: true,
-        fillColor: const Color(0xFFF9FAFB),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(12),
-          borderSide: BorderSide.none,
+            ],
+          ),
         ),
       ),
     );
