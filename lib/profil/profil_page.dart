@@ -44,6 +44,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 storeName = controller.text;
               });
 
+              // ignore: use_build_context_synchronously
               Navigator.pop(context);
             },
             child: const Text("Simpan"),
@@ -62,6 +63,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   Future<void> logout(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
+    // ignore: use_build_context_synchronously
     Navigator.pop(context); // kembali ke login / menu
   }
 
@@ -75,7 +77,6 @@ class _ProfilePageState extends State<ProfilePage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // 🔵 HEADER PROFIL
             Container(
               width: double.infinity,
               padding: const EdgeInsets.symmetric(vertical: 30),
@@ -115,8 +116,6 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
 
             const SizedBox(height: 20),
-
-            // 🟦 CARD INFO TOKO
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Card(
@@ -136,7 +135,6 @@ class _ProfilePageState extends State<ProfilePage> {
 
             const SizedBox(height: 20),
 
-            // 🔴 LOGOUT BUTTON
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: ElevatedButton.icon(

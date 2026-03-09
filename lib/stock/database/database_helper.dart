@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
-
 import '../models/item.dart';
 import '../models/stock_history.dart';
 import '../../kasir/models/cart_item.dart';
@@ -91,16 +90,12 @@ class DBHelper {
     ''');
   }
 
-  // ================= UPGRADE =================
-
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
     if (oldVersion < 3) {
       await db.execute('ALTER TABLE items ADD COLUMN imageUrl TEXT');
       await db.execute('ALTER TABLE items ADD COLUMN category TEXT');
     }
   }
-
-  // ================= ITEM CRUD =================
 
   Future<int> insertItem(Item item) async {
     final database = await db;
@@ -196,8 +191,6 @@ class DBHelper {
     return res.map((e) => Item.fromMap(e)).toList();
   }
 
-  // ================= STOCK =================
-
   Future<void> changeStock({
     required int itemId,
     required int change,
@@ -246,8 +239,6 @@ class DBHelper {
     );
     return res.map((e) => StockHistory.fromMap(e)).toList();
   }
-
-  // ================= CHECKOUT =================
 
   Future<void> checkoutSale({
     required List<CartItem> cartItems,
@@ -322,5 +313,29 @@ class DBHelper {
         }
       }
     });
+  }
+  Future<List<Map<String, dynamic>>> getSales() async{
+    // ignore: non_constant_identifier_names
+    final Database = await db;
+
+    return await Database.query(
+      "sales",
+      orderBy : "id DESC"
+    );
+  }
+  Future<List<Map<String, dynamic>>>getSalesItems(int saleId) async{
+    final database = await db;
+
+    return await database.rawQuery('''
+      SELECT
+        sale_items.quantity,
+        sale_items.SellPrice
+        items.name
+        FROM sale_items
+        JOIN items ON items.id =
+        sale_items.itemId
+        WHERE sale_items.saleId = ?
+        '''
+    );
   }
 }

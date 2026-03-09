@@ -1,6 +1,6 @@
   import 'package:flutter/material.dart';
   import 'package:shared_preferences/shared_preferences.dart';
-  import 'package:stock_app/profile/profil_page.dart';
+  import 'package:stock_app/profil/profil_page.dart';
   import '../../stock/pages_stock/home_page.dart';
   import '../../kasir/pages_kasir/cashier_page.dart';
 
